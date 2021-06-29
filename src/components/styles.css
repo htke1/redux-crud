@@ -1,0 +1,33 @@
+#formOnly{
+    max-width: fit-content;
+    padding-left: 45vw;
+}
+
+h2{
+    padding-left: 46.5vw;
+    padding-bottom: 5vh;;
+}
+.main{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 3vh;
+}
+
+.brand{
+    max-height: 6.5vh;
+    padding-left: 15vw;
+}
+
+#addSign:hover{
+    transform: rotateX(45) scale(1.1);
+    transition: 0.3sec;
+
+}
+
+#likeBtn:hover{
+transform:scale(1.1);
+}
+
+#dislikeBtn:hover{
+    transform:scale(1.1);
+}
