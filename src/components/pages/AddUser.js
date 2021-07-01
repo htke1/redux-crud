@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { GlobalContext } from "../context/GlobalState";
+import React, { useState } from 'react';
 import { v4 as uuid } from "uuid";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -9,22 +8,23 @@ import {
   Input,
   Button
 } from "reactstrap";
+import { useSelector, useDispatch } from 'react-redux';
+import { createPost } from '../../action/actions';
 
 export const AddUser = () => {
-  const [name, setName] = useState('');
-  const [caption, setCaption] = useState('');
+  const [title, setName] = useState('');
+  const [body, setCaption] = useState('');
   const [like, setLike]=useState(null);
-  const { addUser } = useContext(GlobalContext);
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
     const newUser = {
       id: uuid(),
-      name,
-      caption,like
+      title,
+      body,like
     }
-    addUser(newUser);
+    dispatch(createPost(newUser));
     history.push("/");
   }
 
@@ -37,14 +37,18 @@ export const AddUser = () => {
   }
 
   return (
+    <>
+    <h2>Add new post</h2>
     <Form onSubmit={onSubmit}>
       <FormGroup>
-        <Label>Name</Label>
-        <Input type="text" value={name} onChange={onChange} name="name" placeholder="Enter user" required></Input>
-        <Input type="text" value={caption} onChange={onChangeCaption} name="caption" placeholder="Enter caption" required></Input>
+        <Label>Title</Label>
+        <Input type="text" value={title} onChange={onChange} name="title" placeholder="Enter user" required></Input>
+        <Label>Caption</Label>
+        <Input type="text" value={body} onChange={onChangeCaption} name="body" placeholder="Enter caption" required></Input>
       </FormGroup>
       <Button type="submit">Submit</Button>
       <Link to="/" className="btn btn-danger ml-2">Cancel</Link>
     </Form>
+    </>
   )
 }

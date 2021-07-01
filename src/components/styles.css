@@ -15,7 +15,7 @@ h2{
 
 .brand{
     max-height: 6.5vh;
-    padding-left: 15vw;
+    padding-left: 10vw;
 }
 
 #addSign:hover{
@@ -30,4 +30,8 @@ transform:scale(1.1);
 
 #dislikeBtn:hover{
     transform:scale(1.1);
+}
+
+#Cardbox{
+    padding-top: 3vh;
 }

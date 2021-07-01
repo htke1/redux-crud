@@ -1,24 +1,23 @@
-import React, { useContext , useState} from 'react';
-import { GlobalContext } from "../context/GlobalState";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState} from 'react';
 import './styles.css'
-import { Card, Button, Image , Icon} from "semantic-ui-react"
-
+import {  Grid, Message } from "semantic-ui-react"
+import GridBox from './GridBox';
+import {  useSelector } from 'react-redux';
+import Placeholder  from './util/placeholder';
 export const UserList = () => {
-  const { users, removeUser, likedPost,disLikedPost } = useContext(GlobalContext);
-  const [showData, setData] = useState(users);
+  const posts=useSelector((state)=> state.posts)
+  const [showData, setData] = useState(posts);
   const [searchItem, setSearchItem] = useState('');
-
+ 
 
   function handleChange(e){
-    console.log("lello");
     setSearchItem(e.target.value);
 
-    let temp=users.filter((user)=>{
+    let temp=showData.filter((user)=>{
         if(searchItem===''){
             return user
         }
-        else if(user.name.toLowerCase().includes(searchItem.toLowerCase())){
+        else if(user.title.toLowerCase().includes(searchItem.toLowerCase())){
             return user
         }
     })
@@ -26,81 +25,55 @@ export const UserList = () => {
    
 }
 
-function handleLikeClick(id){
-  
-  likedPost(id);
 
-}
   return (
     <>
 
-      {users.length > 0 ? (
+      {posts.length ? (
+       
           searchItem.length===0? (
         <>
          <input type="text" placeholder="search" onChange={(e)=>handleChange(e)}/>
+         <Grid columns={3} stackable id="Cardbox">
+          
+       {posts.map(post => (
+         <>
 
-       {users.map(user => (
-           <Card key={user.id}>
-        <Card.Content>
-        <Card.Header>{user.name}</Card.Header>
-        <Card.Description>
-        {user.caption}
-           </Card.Description>
-              
-                <Link to={`/edit/${user.id}`} color="warning" ><Button  color="blue">Edit</Button></Link>
-                <Button onClick={() => removeUser(user.id)} color="black">Delete</Button>
-                
-               
-            </Card.Content>
-            <Card.Content extra>
-          <div className='ui two buttons'>
-            <button  className="ui  yellow button" id="likeBtn" onClick={()=>handleLikeClick(user.id)}>
-            <Icon name='thumbs up outline'/>
-            </button>
-            <button  className="ui  red button" id="dislikeBtn" onClick={()=>disLikedPost(user.id)}>
-           <Icon name = 'thumbs down'/>
-            </button>
-            
-          </div>
-        </Card.Content>
-            </Card>
+         <Grid.Column >
+          <GridBox id={post.id} title={post.title} body={post.body}/>
+          </Grid.Column>
+          </>
           ))}
+          </Grid>
+          
+          
           </>
           )
           :
         (  <>
             <input type="text" placeholder="search" onChange={(e)=>handleChange(e)}/>
+            <Grid columns={3} stackable id="Cardbox">
           {
-            showData.map(user => (
-              <Card key={user.id}>
-              <Card.Content>
-              <Card.Header>{user.name}</Card.Header>
-              <Card.Description>
-              {user.caption}
-                 </Card.Description>
-                    
-                      <Link to={`/edit/${user.id}`} color="warning" ><Button  color="blue">Edit</Button></Link>
-                      <Button onClick={() => removeUser(user.id)} color="black">Delete</Button>
-                      
-                     
-                  </Card.Content>
-                  <Card.Content extra>
-                <div className='ui two buttons'>
-                  <button  className="ui  yellow button" id="likeBtn" onClick={()=>handleLikeClick(user.id)}>
-                  <Icon name='thumbs up outline'/>
-                  </button>
-                  <button  className="ui  red button" id="dislikeBtn" onClick={()=>disLikedPost(user.id)}>
-                 <Icon name = 'thumbs down'/>
-                  </button>
-                  
-                </div>
-              </Card.Content>
-                  </Card>
+            showData.map(post => (
+              <>
+              <Grid.Column key={post.id}>
+               <GridBox id={post.id} title={post.title} body={post.body}/>
+               </Grid.Column>
+               </>
             )
           )}
+          </Grid>
         </>
       )) : (
-          <h4 className="text-center">No Users</h4>
+        <div columns={3} stackable>
+      <Placeholder/>
+     <Placeholder/>
+     <Placeholder/>
+     <Message warning>
+    <Message.Header>You must add post before you can view them!</Message.Header>
+    <p>Click on + to add new post.</p>
+  </Message>
+      </div>
         )}
     </>
   )

@@ -1,17 +1,17 @@
-import React from 'react';
+import React   from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Home } from "./components/Home";
-import { AddUser } from "./components/AddUser";
-import { EditUser } from "./components/EditUser";
-import { GlobalProvider } from "./context/GlobalState";
-import Liked from './components/likedPage';
-import Disliked from './components/disLiked'
+import { Home } from "./components/pages/Home";
+import { AddUser } from "./components/pages/AddUser";
+import { EditUser } from "./components/pages/EditUser";
+import Liked from './components/pages/likedPage';
+import Disliked from './components/pages/disLiked'
 import "bootstrap/dist/css/bootstrap.min.css";
-
 const App = () => {
+
+  
   return (
     <div style={{ maxWidth: "50rem", margin: "4rem auto" }}>
-      <GlobalProvider>
+     
         <Router>
           <Switch>
             {/* <Route exact path="/" component={() => <Home users={users} setUsers={setUsers} />} /> */}
@@ -22,7 +22,6 @@ const App = () => {
             <Route path="/disliked" component={Disliked} />
           </Switch>
         </Router>
-      </GlobalProvider>
     </div>
   )
 }
