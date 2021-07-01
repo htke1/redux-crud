@@ -8,8 +8,9 @@ import {
   Input,
   Button
 } from "reactstrap";
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 import { createPost } from '../../action/actions';
+import '../styles.css'
 
 export const AddUser = () => {
   const [title, setName] = useState('');
